@@ -43,7 +43,7 @@ class QueryHandler {
       }
     }
     try {
-      return await this.db.query("SELECT * FROM users WHERE id = ?", [params.userId]);
+      return await this.db.query(`SELECT * FROM users WHERE id = ?`, [params.userId]);
     } catch (error) {
       return null;
     }
@@ -51,7 +51,7 @@ class QueryHandler {
 
   async getUserByUsername(username){
     try {
-      return await this.db.query("SELECT * FROM users WHERE LOWER(username) = ?", `${username}`);
+      return await this.db.query(`SELECT * FROM users WHERE LOWER(username) = ?`, `${username}`);
     } catch (error) {
       return null;
     }
@@ -74,7 +74,7 @@ class QueryHandler {
   async addSocketId(prams){
     debugger
     try {
-      return await this.db.query("UPDATE users SET socketId = ?, online= ? WHERE id = ?", [prams.socketId,'Y',prams.userId]);
+      return await this.db.query(`UPDATE users SET socketId = ?, online= ? WHERE id = ?`, [prams.socketId,'Y',prams.userId]);
     } catch (error) {
       console.log(error);
       return null;
@@ -83,7 +83,7 @@ class QueryHandler {
 
   async makeUserOnline(userId){
     try {
-      return await this.db.query("UPDATE users SET online= ? WHERE id = ?", ['Y',userId]);
+      return await this.db.query(`UPDATE users SET online= ? WHERE id = ?`, ['Y',userId]);
     } catch (error) {
       console.log(error);
       return null;
@@ -92,14 +92,14 @@ class QueryHandler {
 
   async isUserLoggedOut(userSocketId){
     try {
-      return await this.db.query("SELECT online FROM users WHERE socketId = ?", [userSocketId]);
+      return await this.db.query(`SELECT online FROM users WHERE socketId = ?`, [userSocketId]);
     } catch (error) {
       return null;
     }
   }
 
   async logoutUser(userId){
-    return await this.db.query("UPDATE users SET socketId = ?, online= ? WHERE id = ?", ['','N',userId]);
+    return await this.db.query(`UPDATE users SET socketId = ?, online= ? WHERE id = ?`, ['','N',userId]);
   }
 
   getChatList(userId, userSocketId){
@@ -107,8 +107,8 @@ class QueryHandler {
     console.log(userId, userSocketId);
     try {
       return Promise.all([
-        this.db.query("SELECT id,username,online,socketId FROM users WHERE id = ?", [userId]),
-        this.db.query("SELECT id,username,online,socketId FROM users WHERE online = ? and socketId != ?", ['Y',userSocketId])
+        this.db.query(`SELECT id,username,online,socketId FROM users WHERE id = ?`, [userId]),
+        this.db.query(`SELECT id,username,online,socketId FROM users WHERE online = ? and socketId != ?`, ['Y',userSocketId])
       ]).then( (response) => {
         return {
           userinfo : response[0].length > 0 ? response[0][0] : response[0],

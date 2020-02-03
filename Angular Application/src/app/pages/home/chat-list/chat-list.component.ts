@@ -37,6 +37,7 @@ export class ChatListComponent implements OnInit {
 	}
 
 	renderChatList(chatListResponse: ChatListResponse): void {
+	  debugger
 		if (!chatListResponse.error) {
 			if (chatListResponse.singleUser) {
 				if (this.chatListUsers.length > 0) {

@@ -51,7 +51,6 @@ export class AuthenticationComponent implements OnInit {
 	}
 
 	login(): void {
-	  debugger
 		if (this.loginForm.valid) {
 			this.overlayDisplay = true;
 			this.chatService.login(this.loginForm.value).subscribe(

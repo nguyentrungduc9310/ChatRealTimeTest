@@ -38,7 +38,6 @@ class RouteHandler{
 	}
 
 	async loginRouteHandler(request, response){
-	  debugger
 		const data = {
 			username : (request.body.username).toLowerCase(),
 			password : request.body.password
@@ -74,7 +73,7 @@ class RouteHandler{
 							error : true,
 							message : CONSTANTS.USER_LOGIN_FAILED
 						});
-					}					
+					}
 				}
 			} catch (error) {
 				response.status(CONSTANTS.SERVER_NOT_FOUND_HTTP_CODE).json({
@@ -111,14 +110,14 @@ class RouteHandler{
 					response.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
 						error : false,
 						message : CONSTANTS.USER_REGISTRATION_FAILED
-					});	           			
+					});
 				} else {
 					response.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
 						error : false,
 						userId : result.insertedId,
 						message : CONSTANTS.USER_REGISTRATION_OK
 					});
-				}		           	
+				}
 			} catch ( error ) {
 				response.status(CONSTANTS.SERVER_NOT_FOUND_HTTP_CODE).json({
 					error : true,
@@ -129,7 +128,6 @@ class RouteHandler{
 	}
 
 	async userSessionCheckRouteHandler(request, response){
-	  debugger
 		let userId = request.body.userId;
 		if (userId === '') {
 			response.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
@@ -155,7 +153,7 @@ class RouteHandler{
 
 	async getMessagesRouteHandler(request, response){
 		let userId = request.body.userId;
-		let toUserId = request.body.toUserId;			
+		let toUserId = request.body.toUserId;
 		if (userId == '') {
 			response.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
 				error : true,

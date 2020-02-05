@@ -29,21 +29,10 @@ class QueryHandler {
   }
 
   async getUserInfo(params){
-    let queryProjection = null;
-    if(params.socketId){
-      queryProjection = {
-        "socketId" : true
-      }
-    } else {
-      queryProjection = {
-        "username" : true,
-        "online" : true,
-        '_id': false,
-        'id': '$_id'
-      }
-    }
+    debugger
     try {
-      return await this.db.query(`SELECT * FROM users WHERE id = ?`, [params.userId]);
+      const result = await this.db.query(`SELECT * FROM users WHERE id = ? AND online = 'Y'`, [params.userId]);
+      return params.socketId ? result[0]['socketId'] : result;
     } catch (error) {
       return null;
     }
@@ -58,7 +47,6 @@ class QueryHandler {
   }
 
   async userSessionCheck(param){
-    debugger
     try {
       const result = await this.db.query(`SELECT * FROM users WHERE id = ? AND online = 'Y'`, `${param.userId}`);
       if(result !== null){
@@ -72,7 +60,6 @@ class QueryHandler {
   }
 
   async addSocketId(prams){
-    debugger
     try {
       return await this.db.query(`UPDATE users SET socketId = ?, online= ? WHERE id = ?`, [prams.socketId,'Y',prams.userId]);
     } catch (error) {
@@ -99,21 +86,26 @@ class QueryHandler {
   }
 
   async logoutUser(userId){
-    return await this.db.query(`UPDATE users SET socketId = ?, online= ? WHERE id = ?`, ['','N',userId]);
+    try {
+      return await this.db.query(`UPDATE users SET socketId = ?, online= ? WHERE id = ?`, ['','N',userId]);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 
   getChatList(userId, userSocketId){
-    debugger
     console.log(userId, userSocketId);
     try {
       return Promise.all([
-        this.db.query(`SELECT id,username,online,socketId FROM users WHERE id = ?`, [userId]),
-        this.db.query(`SELECT id,username,online,socketId FROM users WHERE online = ? and socketId != ?`, ['Y',userSocketId])
+        this.db.query(`SELECT id,online,username FROM users WHERE id = ?`, [userId]),
+        this.db.query(`SELECT id,online,username FROM users WHERE online = ? and socketId != ?`, ['Y',userSocketId])
       ]).then( (response) => {
-        return {
-          userinfo : response[0].length > 0 ? response[0][0] : response[0],
-          chatlist : response[1]
-        };
+        return response[1];
+        // return {
+        //   userinfo : response[0].length > 0 ? response[0][0] : response[0],
+        //   chatlist : response[1]
+        // };
       }).catch( (error) => {
         console.warn(error);
         return (null);
@@ -136,11 +128,11 @@ class QueryHandler {
     }
   }
 
-  async getMessages(userId, toUserId){
+  async getMessages(param){
     try {
       return await this.db.query(
         "SELECT id,fromUserId as fromUserId,toUserId as toUserId,message FROM messages WHERE (fromUserId = ? AND toUserId = ? ) OR (fromUserId = ? AND toUserId = ? )	ORDER BY id ASC",
-        [userId, toUserId, toUserId, userId]
+        [param.userId, param.toUserId, param.toUserId, param.userId]
       );
     } catch (error) {
       console.warn(error);

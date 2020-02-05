@@ -19,7 +19,6 @@ class Socket{
 	socketEvents(){
 
 		this.io.on('connection', (socket) => {
-debugger
 			/* Get the user's Chat list	*/
 			socket.on(`chat-list`, async (data) => {
 				if (data.userId == '') {
@@ -59,6 +58,7 @@ debugger
 			* send the messages to the user
 			*/
 			socket.on(`add-message`, async (data) => {
+			  debugger
 				if (data.message === '') {
 					this.io.to(socket.id).emit(`add-message-response`,{
 						error : true,
@@ -141,7 +141,6 @@ debugger
 	socketConfig(){
 		this.io.use( async (socket, next) => {
 			try {
-			  debugger
 				await queryHandler.addSocketId({
           userId: socket.request._query['userId'],
           socketId: socket.id});

@@ -37,7 +37,7 @@ class QueryHandler1{
 				});
 			} catch (error) {
 				reject(error)
-			}	
+			}
 		});
 	}
 
@@ -56,7 +56,7 @@ class QueryHandler1{
 				});
 			} catch (error) {
 				reject(error)
-			}	
+			}
 		});
 	}
 
@@ -73,7 +73,7 @@ class QueryHandler1{
 				});
 			} catch (error) {
 				reject(error)
-			}	
+			}
 		});
 	}
 
@@ -87,7 +87,7 @@ class QueryHandler1{
 						reject(err);
 					}
 					resolve(result);
-				});	
+				});
 			} catch (error) {
 				reject(error)
 			}
@@ -214,7 +214,7 @@ class QueryHandler1{
 						}
 					]
 				},{
-					'$and': [ 
+					'$and': [
 						{
 							'toUserId': toUserId
 						}, {
@@ -223,7 +223,7 @@ class QueryHandler1{
 					]
 				},
 			]
-		};	    
+		};
 		return new Promise( async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
@@ -248,7 +248,7 @@ class QueryHandler1{
 		};
 		return new Promise( async (resolve, reject) => {
 			try {
-				const [DB, ObjectID] = await this.Mongodb.onConnect();		
+				const [DB, ObjectID] = await this.Mongodb.onConnect();
 				let condition = {};
 				if (isSocketId) {
 					condition.socketId = userID;

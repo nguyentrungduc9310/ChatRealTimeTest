@@ -59,7 +59,7 @@ export class ConversationComponent implements OnInit {
 
 	listenForMessages(): void {
 		this.socketService.receiveMessages().subscribe((socketResponse: Message) => {
-			if (this.selectedUser !== null && this.selectedUser.id === socketResponse.fromUserId) {
+			if (this.selectedUser !== null && this.selectedUser.id == socketResponse.fromUserId) {
 				this.messages = [...this.messages, socketResponse];
 				this.scrollMessageContainer();
 			}

@@ -37,18 +37,18 @@ export class ChatListComponent implements OnInit {
 	}
 
 	renderChatList(chatListResponse: ChatListResponse): void {
-	  debugger
 		if (!chatListResponse.error) {
 			if (chatListResponse.singleUser) {
 				if (this.chatListUsers.length > 0) {
 					this.chatListUsers = this.chatListUsers.filter(function (obj: User) {
-						return obj.id !== chatListResponse.chatList[0].id;
+						return obj.id != chatListResponse.chatList[0].id;
 					});
 				}
 				/* Adding new online user into chat list array */
 				this.chatListUsers = this.chatListUsers.concat(chatListResponse.chatList);
 			} else if (chatListResponse.userDisconnected) {
-				const loggedOutUser = this.chatListUsers.findIndex((obj: User) => obj.id === chatListResponse.userid);
+			  const userId = chatListResponse.userid;
+				const loggedOutUser = this.chatListUsers.findIndex((obj: User) => obj.id == userId);
 				if (loggedOutUser >= 0) {
 					this.chatListUsers[loggedOutUser].online = 'N';
 				}

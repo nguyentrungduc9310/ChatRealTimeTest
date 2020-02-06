@@ -1,6 +1,5 @@
 /*
-* Real time private chatting app using Angular 2, Nodejs, mongodb and Socket.io
-* @author Shashank Tiwari
+*　Test chat
 */
 
 'use strict';
@@ -25,7 +24,7 @@ class Routes{
 
 		this.app.post('/getMessages', routeHandler.getMessagesRouteHandler);
 
-		this.app.get('*', routeHandler.routeNotFoundHandler);		
+		this.app.get('*', routeHandler.routeNotFoundHandler);
 	}
 
 	routesConfig(){

@@ -1,6 +1,5 @@
 /*
-* Real time private chatting app using Angular 2, Nodejs, mongodb and Socket.io
-* @author Shashank Tiwari
+*　Test chat
 */
 
 const expressConfig = require('./express-config');
@@ -9,7 +8,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 
 class AppConfig{
-	
+
 	constructor(app){
 		dotenv.config();
 		this.app = app;
@@ -21,7 +20,7 @@ class AppConfig{
         );
         this.app.use(
         	cors()
-        );        
+        );
 		new expressConfig(this.app);
 	}
 

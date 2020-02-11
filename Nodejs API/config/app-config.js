@@ -1,5 +1,5 @@
 /*
-*　Test chat
+*　Test real time chat
 */
 
 const expressConfig = require('./express-config');

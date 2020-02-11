@@ -1,5 +1,5 @@
 /*
-*　Test chat
+*　Test real time chat
 */
 'use strict';
 const bcrypt = require('bcrypt');

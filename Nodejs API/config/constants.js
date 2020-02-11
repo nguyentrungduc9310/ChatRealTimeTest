@@ -1,5 +1,5 @@
 /*
-*　Test chat
+*　Test real time chat
 */
 
 /* Validation related  constants starts*/
